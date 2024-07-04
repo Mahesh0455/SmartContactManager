@@ -1,7 +1,11 @@
 package com.smart.entities;
 
 import java.util.ArrayList;
+
+
 import java.util.List;
+
+
 
 import org.aspectj.weaver.tools.Trace;
 
@@ -58,8 +62,8 @@ public class User {
 		this.enabled = enabled;
 	}
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "user")
-	private List<Contact> contacts=new ArrayList<Contact>();
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "user")	
+	private List<Contact> contacts=new ArrayList <Contact>();
 
 	public List<Contact> getContacts() {
 		return contacts;
@@ -131,6 +135,13 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
+				+ ", imageUrlString=" + imageUrlString + ", about=" + about + ", enabled=" + enabled + ", contacts="
+				+ contacts + "]";
 	}
 	
 	

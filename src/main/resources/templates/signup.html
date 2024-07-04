@@ -17,70 +17,78 @@
 
 				<div class="col-md-6 offset-3  ">
 
-					<div class="my-card mt-2 rounded  " >
-					
-					<div class="container text-center ">
-					
-					<img width="80" th:src="@{/img/membership.png}" />
-					
-					</div>
-					
-					
-					
-					
+					<div class="my-card mt-2 rounded  ">
+
+						<div th:if="${session.message}" th:classappend="${session.message.mtype}" class="alert" role="alert">
+							
+							<p th:text="${session.message.content}" ></p>	
+							
+							<th:block th:text="${#session.removeAttribute('message')}" ></th:block>							
+							<div  ></div>
+							
+							
+						</div>
+
+						<div class="container text-center ">
+
+							<img width="80" th:src="@{/img/membership.png}" />
+
+						</div>
+
+
+
+
 						<h2 class="text-center">Register here ..!!</h2>
 
-						<form action="" th:action="@{/doRegister}" method="post">
+						<form action="" th:action="@{/doRegister}" method="post"
+							th:object="${user}">
 
 
 							<div class="form-group">
-								<label for="userName">Your User Name</label> <input
-									type="text" class="form-control" id="userName"
-									aria-describedby="textHelp" required="required"
-									placeholder="Enter User Name">
+								<label for="userName">Your User Name</label> <input type="text"
+									class="form-control" id="userName" aria-describedby="textHelp"
+									required="required" placeholder="Enter User Name"
+									th:value="${user.name}" name="name">
 							</div>
 
 							<div class="form-group">
 								<label for="exampleInputEmail1">Email address</label> <input
 									type="email" class="form-control" id="email"
 									aria-describedby="emailHelp" required="required"
-									placeholder="Enter email">
+									th:value="${user.email}" placeholder="Enter email" name="email">
 							</div>
 							<div class="form-group">
 								<label for="exampleInputPassword1">Password</label> <input
 									type="password" class="form-control" id="password"
-									placeholder="Enter password"
-									>
+									placeholder="Enter password" name="password"
+									required="required">
 							</div>
-							
-							
+
+
 							<div class="form-group">
-							
-							<textarea rows="6" class="form-control" placeholder="Enter something about you...!" ></textarea>
-							
+
+								<textarea th:value="${user.about}" rows="6" class="form-control"
+									placeholder="Enter something about you...!" name="about"></textarea>
+
 							</div>
-							
+
 							<div class="form-group form-check ">
-							
-							<input type="checkbox" 
-							class="form-check-input"
-							name="agreement"
-							id="agreement" 
-					
-							/>
-							<label for="agreement"> Terms and Condition</label>
-							
-							
-							
+
+								<input type="checkbox" class="form-check-input" name="agreement"
+									id="agreement" /> <label for="agreement"> Terms and
+									Condition</label>
+
+
+
 							</div>
-							
-							
-							<div class="container text-center "  >
-							
-							
-							<button type="submit" class=" btn bg-primary text-white">Submit</button>
-							<button type="reset" class="btn btn-warning text-white">Reset</button>
-							
+
+
+							<div class="container text-center ">
+
+
+								<button type="submit" class=" btn bg-primary text-white">Submit</button>
+								<button type="reset" class="btn btn-warning text-white">Reset</button>
+
 							</div>
 
 
