@@ -19,13 +19,11 @@
 
 					<div class="my-card mt-2 rounded  ">
 
-						<div th:if="${session.message}" th:classappend="${session.message.mtype}" class="alert" role="alert">
+						<div th:if="${message != null}" th:classappend="${message.mtype}" class="alert" role="alert">
 							
-							<p th:text="${session.message.content}" ></p>	
+							<p class="text-center" th:text="${message.content}" ></p>
 							
-							<th:block th:text="${#session.removeAttribute('message')}" ></th:block>							
-							<div  ></div>
-							
+						
 							
 						</div>
 

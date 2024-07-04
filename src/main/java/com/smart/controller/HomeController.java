@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.smart.dao.UserRepository;
 import com.smart.entities.User;
@@ -53,7 +54,7 @@ public class HomeController {
 	@PostMapping(path = "/doRegister")
 	public String resgisterUser(@ModelAttribute("user") User user,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model,
-			HttpSession session) {
+			HttpSession session, RedirectAttributes redirectAttribute) {
 
 		try {
 
@@ -74,17 +75,17 @@ public class HomeController {
 			
 			model.addAttribute("user", user);
 			
-			session.setAttribute("message", new Message("Successfully Registered","alert-success"));
+			redirectAttribute.addFlashAttribute("message", new Message("Successfully Registered","alert-success"));
 
-			return "signup";
+			return "redirect:/signup";
 
 		} catch (Exception e) {
 
 			model.addAttribute("user", user);
 
-			session.setAttribute("message", new Message("Something Went wrong", "alert-danger"));
+			redirectAttribute.addFlashAttribute("message", new Message("You must agree Terms and condition","alert-danger"));
 
-			return "signup";
+			return "redirect:/signup";
 
 		}
 
