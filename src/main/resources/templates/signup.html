@@ -19,12 +19,13 @@
 
 					<div class="my-card mt-2 rounded  ">
 
-						<div th:if="${message != null}" th:classappend="${message.mtype}" class="alert" role="alert">
-							
-							<p class="text-center" th:text="${message.content}" ></p>
-							
-						
-							
+						<div th:if="${message != null}" th:classappend="${message.mtype}"
+							class="alert" role="alert">
+
+							<p class="text-center" th:text="${message.content}"></p>
+
+
+
 						</div>
 
 						<div class="container text-center ">
@@ -38,7 +39,7 @@
 
 						<h2 class="text-center">Register here ..!!</h2>
 
-						<form action="" th:action="@{/doRegister}" method="post"
+						<form novalidate action="" th:action="@{/doRegister}" method="post"
 							th:object="${user}">
 
 
@@ -46,7 +47,13 @@
 								<label for="userName">Your User Name</label> <input type="text"
 									class="form-control" id="userName" aria-describedby="textHelp"
 									required="required" placeholder="Enter User Name"
-									th:value="${user.name}" name="name">
+									th:value="${user.name}" name="name"
+									th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}"
+									
+									>
+
+								<div  th:each="e: ${#fields.errors('name')}" th:text="${e}" class="invalid-feedback"> This is error
+								</div>	
 							</div>
 
 							<div class="form-group">
@@ -65,7 +72,8 @@
 
 							<div class="form-group">
 
-								<textarea th:value="${user.about}" rows="6" class="form-control"
+								<textarea th:text="${user.about}" th:value="${user.about}"
+									rows="6" class="form-control"
 									placeholder="Enter something about you...!" name="about"></textarea>
 
 							</div>

@@ -8,6 +8,7 @@ import java.util.List;
 
 
 import org.aspectj.weaver.tools.Trace;
+import org.hibernate.validator.constraints.NotBlank;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
@@ -19,6 +20,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_reference")
@@ -28,11 +31,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@NotEmpty(message = "Please enter User Name")
+	@Size(min = 3,max = 10,message = "Usename shoud be between 3 to 10 characters")
 	private String name;
 	
 	@Column(unique = true)
 	private String email;
-	
+		
 	private String password;
 	
 	private String role;

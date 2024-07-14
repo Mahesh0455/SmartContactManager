@@ -3,6 +3,7 @@ package com.smart.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,8 @@ import com.smart.dao.UserRepository;
 import com.smart.entities.User;
 import com.smart.util.Message;
 
-import jakarta.servlet.http.HttpSession;	
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;	
 
 
 
@@ -52,9 +54,9 @@ public class HomeController {
 	}
 
 	@PostMapping(path = "/doRegister")
-	public String resgisterUser(@ModelAttribute("user") User user,
+	public String resgisterUser( @Valid @ModelAttribute("user") User user, BindingResult result,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model,
-			HttpSession session, RedirectAttributes redirectAttribute) {
+			HttpSession session) {
 
 		try {
 
@@ -64,6 +66,22 @@ public class HomeController {
 				throw new Exception("You must agree terms and condition");
 
 			}
+			
+			
+			if(result.hasErrors()) {
+				
+				
+				System.out.println(result.toString());
+				model.addAttribute("user", user);
+				model.addAttribute(session);
+				
+				return "signup";
+				
+				
+			}
+			
+			
+			
 
 			user.setRole("User");
 			user.setEnabled(true);
@@ -75,17 +93,17 @@ public class HomeController {
 			
 			model.addAttribute("user", user);
 			
-			redirectAttribute.addFlashAttribute("message", new Message("Successfully Registered","alert-success"));
+			model.addAttribute("message", new Message("Successfully Registered","alert-success"));
+			
 
-			return "redirect:/signup";
+			return "signup";
 
 		} catch (Exception e) {
 
 			model.addAttribute("user", user);
+			model.addAttribute("message", new Message("You must agree Terms and condition","alert-danger"));
 
-			redirectAttribute.addFlashAttribute("message", new Message("You must agree Terms and condition","alert-danger"));
-
-			return "redirect:/signup";
+			return "signup";
 
 		}
 
